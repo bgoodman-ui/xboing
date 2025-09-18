@@ -63,10 +63,15 @@
 #include <stdlib.h>
 #include <stddef.h>
 //#include <X11/Xlib.h>	//Replace this with RayLib
+//xlib.h core windowing, event handling, input, drawing primitive, not needed. raylib handles this internally
 //#include <X11/Xutil.h>	//Replace this with RayLib
+//handles internally
 //#include <X11/Xos.h>	//Replace this with RayLib
+//not needed, raylib absteacts os level detail internally
 //#include <X11/keysym.h>	//Replace this with RayLib
+//use built in key constants i.e key_left, key_enter
 //#include <xpm.h>
+//use built in image loading
 
 #include "error.h"
 #include "level.h"
@@ -98,7 +103,7 @@ static void handleDialogueEventLoop(Display *display);
 /*
  *  Internal variable declarations:
  */
-
+//could modernize
 enum 	DialogueStates dialogueState;
 int 	dialogueType, validation;
 char 	theMessage[80];
@@ -118,6 +123,10 @@ Pixmap 	text, textM;
  * @todo Need to rewrite code so that it no longer relies on X11 system
  *
  */
+//pixmap - 
+//loadimage()
+//loadtexturefromimage
+//unloadimage + unloadtexture
 void InitialiseDialoguePixmaps(Display *display, Window window,
     Colormap colormap)
 {
@@ -154,6 +163,8 @@ void InitialiseDialoguePixmaps(Display *display, Window window,
  * @todo Remove reliance on X11 system
  *
  */
+//iskeypressed
+//unloadtexture()
 void FreeDialoguePixmaps(Display *display)
 {
     /* Free all the Dialogue Pixmaps */
@@ -176,7 +187,10 @@ void FreeDialoguePixmaps(Display *display)
  * 
  * @todo remove reliance on X11 systems
  *
- */ 
+ */
+//iskeypressed
+//getcharpressed
+
 char *UserInputDialogueMessage(Display *display, char *message, int type,
 	int entryValidation)
 {
@@ -207,6 +221,10 @@ char *UserInputDialogueMessage(Display *display, char *message, int type,
  * @todo remove reliance on X11 system
  *
  */
+//begindrawing + enddrawing
+//clearbackground
+//drawtext
+//drawline
 static void ShowUserInputDialogue(Display *display)
 {
 	int dw = DIALOGUE_WIDTH;
@@ -262,6 +280,11 @@ static void ShowUserInputDialogue(Display *display)
  * @todo remove reliance on X11 system
  *
  */
+
+//applies a fade effect to the window, loads debug, hides the window then flushes it.
+//fades out a pop up window, logs a debug message,then removes the box, then flush(make sure all changes happen immediately) 
+//Need to create custom window fade effect
+
 static void RemoveUserInputDialogue(Display *display)
 {
 	while (WindowFadeEffect(display, inputWindow, 
@@ -274,6 +297,27 @@ static void RemoveUserInputDialogue(Display *display)
 	XFlush(display);
 }
 
+
+//test
+/*
+void RemoveUserInputDialogue(Display *display){
+    while(){
+
+TraceLog("RemoveUserInputDialogue() unmapping dialogue.)"    log debug
+
+reset dialoge state?
+
+}
+
+}
+
+
+*/
+
+
+
+
+
 /**
  * @brief Processes dialogue and carries out different functions in different situations
  *
@@ -282,6 +326,7 @@ static void RemoveUserInputDialogue(Display *display)
  * @todo Remove reliance on X11 system
  *
  */
+
 void ProcessDialogue(Display *display)
 {
     /* The states within the dialogue mode */
@@ -317,6 +362,9 @@ void ProcessDialogue(Display *display)
  * @todo remove X11 system
  *
  */
+//clearbackground
+//drawtext + drawtexture
+
 static void redrawCurrentInput(Display *display)
 {
 	/**
@@ -346,6 +394,12 @@ static void redrawCurrentInput(Display *display)
  * @todo Choose new sound libraries
  *
  */
+
+//bool iskeypressed(int key)/iskeydown/ 
+//void playsound(sound sound)
+
+
+
 static void validateDialogueKeys(Display *display, KeySym keysym, char *str)
 {
 	/* Check the type of keyboard input needed */
@@ -412,6 +466,12 @@ static void validateDialogueKeys(Display *display, KeySym keysym, char *str)
  * @todo Remove reliance on X11 system
  *
  */
+//bool iskeypressed
+//playsound()
+//getcharpressed()
+
+
+
 void handleDialogueKeys(Display *display, XEvent event)
 {
 	char *str;
@@ -468,6 +528,9 @@ void handleDialogueKeys(Display *display, XEvent event)
  * @todo remove reliance on X11
  *
  */
+//processdialogue()
+//begindrawing() + enddrawing()
+//clearbackground()
 static void handleDialogueEventLoop(Display *display)
 {
     XEvent event;
