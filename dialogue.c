@@ -326,7 +326,7 @@ reset dialoge state?
  * @todo Remove reliance on X11 system
  *
  */
-
+//
 void ProcessDialogue(Display *display)
 {
     /* The states within the dialogue mode */
