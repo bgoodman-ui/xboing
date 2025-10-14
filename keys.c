@@ -113,7 +113,7 @@ static int waitingFrame;
 enum KeysStates waitMode;
 Pixmap mouse, leftarrow, rightarrow;
 Pixmap mouseM, leftarrowM, rightarrowM;
-
+//loadimage, loadtexturefromimage,unloadimage,unloadtexture
 void SetUpKeys(Display *display, Window window, Colormap colormap)
 {
     XpmAttributes   attributes;
@@ -139,7 +139,8 @@ void SetUpKeys(Display *display, Window window, Colormap colormap)
 
 	ResetKeys();
 }
-
+//drawing UI
+//drawtext, measuretext,drawline,drawtet=xture,drawtextex
 static void DoText(Display *display, Window window)
 {
 	char string[80];
@@ -270,7 +271,8 @@ static void DoText(Display *display, Window window)
 	DrawShadowCentredText(display, window, textFont, string, 
 		PLAY_HEIGHT - 30, tann, PLAY_WIDTH);
 }
-
+//sparkle animation
+//drawtexture, rendertexture2d,getframetime,getrandomvalue
 static void DoSparkle(Display *display, Window window)
 {
 	static Pixmap store;
@@ -309,7 +311,8 @@ static void DoSparkle(Display *display, Window window)
 		}	
 	}
 }
-
+//play sound and reset mode
+//loadsound, playsound, unloadsound, setsoundvolume
 static void DoFinish(Display *display, Window window)
 {
 	ResetKeysEdit();
@@ -318,7 +321,7 @@ static void DoFinish(Display *display, Window window)
     if (noSound == False) playSoundFile("boing", 50);
 }
 
-
+//control flow for key screen states
 void Keys(Display *display, Window window)
 {
 	switch (KeysState)
@@ -362,13 +365,15 @@ void Keys(Display *display, Window window)
 			break;
 	}
 }
-
+//redraw titlescreen + text
+//drawtext, drawtexture?
 void RedrawKeys(Display *display, Window window)
 {
 	DoIntroTitle(display, window);
 	DoText(display, window);
 }
-
+//free up pixmap
+//unloadtexture
 void FreeKeyControl(Display *display)
 {
     if (mouse)     		XFreePixmap(display, mouse);
@@ -378,7 +383,8 @@ void FreeKeyControl(Display *display)
     if (rightarrow)    	XFreePixmap(display, rightarrow);
     if (rightarrowM)   	XFreePixmap(display, rightarrowM);
 }
-
+//reset state and frame counters
+//
 void ResetKeys(void)
 {
 	KeysState = KEYS_TITLE;
@@ -388,7 +394,8 @@ void ResetKeys(void)
 
 	DEBUG("Reset keys mode.")
 }
-
+//wait for frame to match before changing
+//getframetime, getframe - track progression
 static void DoKeysWait(void)
 {
 	if (frame == waitingFrame)
